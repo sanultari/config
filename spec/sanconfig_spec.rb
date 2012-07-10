@@ -1,7 +1,16 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-describe "Sanconfig" do
-  it "fails" do
-    fail "hey buddy, you should probably rename this file and start specing for real"
+describe "SanUltari::Config" do
+  before :each do
+    @config = SanUltari::Config.new
+  end
+  it "should initialze" do
+    SanUltari::Config.new
+  end
+
+  it "should set plain value" do
+    expected = 'test'
+    @config.a = expected
+    @config.a.should be_equal expected
   end
 end

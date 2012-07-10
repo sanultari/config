@@ -11,16 +11,16 @@ module SanUltari
 #      self.db = hash_to_config(config_hash)
 #    end
 
-    def hash_to_config hash
-      raise Exception.new unless hash.instance_of?(Hash)
-
-      config = Dssb::Config.new
-      hash.each_pair do |key, value|
-        config.send("#{key}=".to_sym, value)
-      end
-
-      config
-    end
+#    def hash_to_config hash
+#      raise Exception.new unless hash.instance_of?(Hash)
+#
+#      config = SanUltari::Config.new
+#      hash.each_pair do |key, value|
+#        config.send("#{key}=".to_sym, value)
+#      end
+#
+#      config
+#    end
 
     def method_missing(method_name, *args, &block)
       name = method_name.to_s
@@ -39,13 +39,15 @@ module SanUltari
           end
         end
       else
-        @values[name] ||= Dssb::Config.new name
+        @values[name] ||= SanUltari::Config.new name
 
         self.class.instance_eval do
           define_method(method_name) do |&blk|
-            @values[name]
-
-            blk.call @values[name] if block_given?
+            if blk != nil
+              blk.call @values[name]
+            else
+              @values[name]
+            end
           end if not public_methods.include? name.to_sym
         end
       end
