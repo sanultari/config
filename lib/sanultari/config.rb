@@ -21,34 +21,31 @@ module SanUltari
 #
 #      config
 #    end
+    def [] name
+      @values ||= {}
+
+      @values[name] = SanUltari::Config.new name if @values[name] == nil
+      @values[name]
+    end
+
+    def []= name, value
+      @values ||= {}
+
+      @values[name] = value
+    end
 
     def method_missing(method_name, *args, &block)
       name = method_name.to_s
       name.chomp!('=')
 
-      @values ||= {}
+      self.class.instance_eval do
+        define_method(name.to_sym) do |&blk|
+          blk.call self[name] if blk != nil
+          self[name]
+        end if not public_methods.include? name.to_sym
 
-      if method_name.to_s.end_with? '='
-        self.class.instance_eval do
-          define_method(name.to_sym) do
-            @values[name]
-          end if not public_methods.include? name.to_sym
-
-          define_method(method_name) do |value|
-            @values[name] = value
-          end
-        end
-      else
-        @values[name] ||= SanUltari::Config.new name
-
-        self.class.instance_eval do
-          define_method(method_name) do |&blk|
-            if blk != nil
-              blk.call @values[name]
-            else
-              @values[name]
-            end
-          end if not public_methods.include? name.to_sym
+        define_method("#{name}=".to_sym) do |value|
+          self[name] = value
         end
       end
 
