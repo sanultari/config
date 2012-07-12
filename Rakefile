@@ -17,8 +17,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "sanconfig"
   gem.homepage = "http://github.com/astral1/sanconfig"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{Simple Configuration}
+  gem.description = %Q{This library provides simple configuration with object's attributes. sanconfig support yaml, redis and zookeeper as datastore.}
   gem.email = "ethernuiel@sanultari.com"
   gem.authors = ["Jeong, Jiung"]
   # dependencies defined in Gemfile
