@@ -14,6 +14,10 @@ module SanUltari
         @values[name] = value
       end
 
+      def keys
+	@values.keys
+      end
+
       def method_missing(method_name, *args, &block)
         name = method_name.to_s
         name.chomp!('=')
