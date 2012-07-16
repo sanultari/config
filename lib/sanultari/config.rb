@@ -1,9 +1,14 @@
+require 'sanultari/config/store'
+
 module SanUltari
   class Config
+
     attr_accessor :name, :values
 
     def initialize name = nil
       @name = name || nil
+      @store_class = Class.new SanUltari::Config::Store
+      @store = @store_class.new
     end
 
 #    def init!
@@ -21,35 +26,9 @@ module SanUltari
 #
 #      config
 #    end
-    def [] name
-      @values ||= {}
-
-      @values[name] = SanUltari::Config.new name if @values[name] == nil
-      @values[name]
-    end
-
-    def []= name, value
-      @values ||= {}
-
-      @values[name] = value
-    end
 
     def method_missing(method_name, *args, &block)
-      name = method_name.to_s
-      name.chomp!('=')
-
-      self.class.instance_eval do
-        define_method(name.to_sym) do |&blk|
-          blk.call self[name] if blk != nil
-          self[name]
-        end if not public_methods.include? name.to_sym
-
-        define_method("#{name}=".to_sym) do |value|
-          self[name] = value
-        end
-      end
-
-      send method_name, *args, &block
+      @store.send method_name, *args, &block
     end
   end
 end
