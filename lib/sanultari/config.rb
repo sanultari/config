@@ -23,12 +23,15 @@ module SanUltari
     def hash_to_config hash
       raise Exception.new unless hash.instance_of?(Hash)
 
-      config = SanUltari::Config.new
       hash.each_pair do |key, value|
-        config.send("#{key}=".to_sym, value)
+        t_value = value
+        if value.instance_of? Hash
+          t_value = Config.new key
+          t_value.hash_to_config value 
+        end
+          
+        @store.send("#{key}=".to_sym, t_value)
       end
-
-      config
     end
 
     def make_path path

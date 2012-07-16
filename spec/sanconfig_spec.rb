@@ -17,9 +17,22 @@ describe "SanUltari::Config" do
     @fixture.class.instance_methods.should_not include :a
   end
 
-  it "should load from yaml file" do
-    config = SanUltari::Config.new
-    config.init!
+  it "should create object without yaml file" do
+    @fixture.init!
+  end
+
+  it "should create object with yaml file" do
+    @fixture.init! 'config.yml'
+    @fixture.test.should eql 'a'
+    @fixture.alpha.should eql 12345
+    @fixture.list_test.length.should eql 3
+    @fixture.list.length.should eql 2
+  end
+
+  it "should create tree object with yaml file" do
+    @fixture.init! 'tree.yml'
+    @fixture.a.should eql 'test'
+    @fixture.test.a.should eql 'confirm'
   end
 
   after :all do
