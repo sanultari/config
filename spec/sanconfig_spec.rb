@@ -11,4 +11,9 @@ describe "SanUltari::Config" do
     @fixture.a.should be_equal expected
     @fixture.class.instance_methods.should_not include :a
   end
+
+  it "should load from yaml file" do
+    config = SanUltari::Config.new
+    config.init!
+  end
 end
