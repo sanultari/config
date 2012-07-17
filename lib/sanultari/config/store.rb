@@ -15,6 +15,7 @@ module SanUltari
       end
 
       def keys
+        return [] if @values == nil
         @values.keys
       end
 

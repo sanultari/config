@@ -14,24 +14,39 @@ module SanUltari
     def init! path = nil
       return nil if path == nil
       config_hash = YAML.load_file make_path(path)
-      hash_to_config(config_hash)
+      from_hash(config_hash)
     end
 
-    def save
+    def save path = nil
+      path = "#{@name}.yml" if path == nil
+      path = 'config.yml' if path == nil
+      File.open(make_path(path), 'w') do |f|
+        YAML.dump(to_hash, f)
+      end
     end
 
-    def hash_to_config hash
+    def from_hash hash
       raise Exception.new unless hash.instance_of?(Hash)
 
       hash.each_pair do |key, value|
         t_value = value
         if value.instance_of? Hash
           t_value = Config.new key
-          t_value.hash_to_config value 
+          t_value.from_hash value 
         end
           
         @store.send("#{key}=".to_sym, t_value)
       end
+    end
+
+    def to_hash
+      hash = {}
+      @store.keys.each do |key|
+        value = @store.send key.to_sym
+        value = value.to_hash if value.instance_of? SanUltari::Config
+        hash[key] = value
+      end
+      hash
     end
 
     def make_path path

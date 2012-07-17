@@ -1,4 +1,4 @@
-a: 'test'
+a: test
 test:
-  a: 'confirm'
-  b: 'cancel'
+  a: confirm
+  b: cancel

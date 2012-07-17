@@ -1,4 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
+require 'tempfile'
 
 describe "SanUltari::Config" do
   before :all do
@@ -35,7 +36,35 @@ describe "SanUltari::Config" do
     @fixture.test.a.should eql 'confirm'
   end
 
+  it "should dump to yaml file" do
+    test_file = 'tree.yml'
+    @fixture.init! test_file
+
+    tmp_file = nil
+    Tempfile.open(['dump', '.yml']) do |f|
+      tmp_file = f
+      @fixture.save tmp_file.path
+    end
+
+    File.open(test_file, 'r') do |o|
+      File.open(tmp_file.path, 'r') do |f|
+        dump = cleanup f.read
+        origin = cleanup o.read
+        dump.should eql origin
+      end
+    end
+
+    tmp_file.unlink
+  end
+
   after :all do
     Dir.chdir @origin
+  end
+
+  private
+  def cleanup string
+    string.gsub! /^$(\r|\n|\r\n)/, ''
+    string.gsub! /^---$(\r|\n|\r\n)/, ''
+    string.each_line.sort.join
   end
 end
