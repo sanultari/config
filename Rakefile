@@ -16,7 +16,7 @@ Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
   gem.name = "sanultari-config"
   gem.homepage = "https://github.com/sanultari/config"
-  gem.license = "AFL"
+  gem.license = "FreeBSD"
   gem.summary = %Q{Simple configuration}
   gem.description = %Q{This library provides simple configuration management with object's attributes. sanconfig support yaml as datastore.}
   gem.email = "ethernuiel@sanultari.com"
