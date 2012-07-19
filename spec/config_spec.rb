@@ -20,6 +20,8 @@ describe "SanUltari::Config" do
 
   it "should create object without yaml file" do
     @fixture.init!
+    @fixture.name.should be_nil
+    @fixture.path.should eql File.expand_path('.')
   end
 
   it "should create object with yaml file" do
@@ -28,6 +30,8 @@ describe "SanUltari::Config" do
     @fixture.alpha.should eql 12345
     @fixture.list_test.length.should eql 3
     @fixture.list.length.should eql 2
+    @fixture.name.should eql 'config'
+    @fixture.path.should eql File.expand_path('.')
   end
 
   it "should create tree object with yaml file" do
