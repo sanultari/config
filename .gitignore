@@ -41,6 +41,8 @@ tmtags
 
 # For vim:
 *.swp
+env.vim
+files.list
 
 # For redcar:
 #.redcar
