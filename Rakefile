@@ -14,11 +14,11 @@ require 'rake'
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
-  gem.name = "sanconfig"
-  gem.homepage = "http://github.com/astral1/sanconfig"
-  gem.license = "MIT"
-  gem.summary = %Q{Simple Configuration}
-  gem.description = %Q{This library provides simple configuration with object's attributes. sanconfig support yaml, redis and zookeeper as datastore.}
+  gem.name = "sanultari-config"
+  gem.homepage = "https://github.com/sanultari/config"
+  gem.license = "AFL"
+  gem.summary = %Q{Simple configuration}
+  gem.description = %Q{This library provides simple configuration management with object's attributes. sanconfig support yaml as datastore.}
   gem.email = "ethernuiel@sanultari.com"
   gem.authors = ["Jeong, Jiung"]
   # dependencies defined in Gemfile
