@@ -2,6 +2,7 @@
 require 'sanultari/config/store'
 require 'yaml'
 
+# @author Jeong, Jiung
 module SanUltari
   # @author Jeong, Jiung
   class Config
