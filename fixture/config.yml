@@ -1,0 +1,6 @@
+test: 'a'
+alpha: 12345
+list_test: [1,2,3]
+list:
+  - 4
+  - 5
