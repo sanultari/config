@@ -6,7 +6,7 @@ require 'yaml'
 module SanUltari
   # @author Jeong, Jiung
   class Config
-    attr_accessor :name, :path
+    attr_accessor :name, :path, :store
 
     # 생성자
     #
