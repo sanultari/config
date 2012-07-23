@@ -6,7 +6,7 @@ require 'yaml'
 module SanUltari
   # @author Jeong, Jiung
   class Config
-    attr_accessor :name, :path
+    attr_accessor :name, :path, :store
 
     # 생성자
     #
@@ -92,7 +92,7 @@ module SanUltari
 
     # 존재하지 않는 메소드 처리를 위한 핸들러
     def method_missing(method_name, *args, &block)
-      @store.send method_name, *args, &block
+      @store.public_send method_name, *args, &block
     end
   end
 end
