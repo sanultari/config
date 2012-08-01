@@ -1,5 +1,6 @@
 # SanUltari Configuration
 [![Gemnasium](https://gemnasium.com/sanultari/config.png)](https://gemnasium.com/sanultari/config)
+[![Build Status](https://secure.travis-ci.org/sanultari/config.png?branch=develop)](http://travis-ci.org/sanultari/config)
 
 오브젝트를 이용하여 계층형 설정 정보를 관리하기 위한 라이브러리.
 

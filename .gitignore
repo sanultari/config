@@ -50,3 +50,6 @@ files.list
 
 # For rubinius:
 *.rbc
+
+# For UltraEdit
+*.bak

@@ -40,8 +40,8 @@ module SanUltari
 
         self.class.instance_eval do
           define_method(name.to_sym) do |&blk|
-          blk.call self[name] if blk != nil
-          self[name]
+            blk.call self[name] if blk != nil
+            self[name]
           end if not public_methods.include? name.to_sym
 
           define_method("#{name}=".to_sym) do |value|

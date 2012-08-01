@@ -10,7 +10,7 @@ group :development do
   gem "autotest-growl", "~> 0.2.16"
   gem "rspec",          "~> 2.11"
   gem "yard",           "~> 0.7"
-  gem "redcarpet",      "~> 2.1"
+  gem "redcarpet",      "~> 2.1", :platform => [:ruby_19, :mingw_19]
   gem "rdoc",           "~> 3.12"
   gem "bundler",        "~> 1.1"
   gem "jeweler",        "~> 1.8.3"
