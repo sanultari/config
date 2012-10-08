@@ -27,8 +27,12 @@ module SanUltari
         @name = File.basename path, '.yml'
         @path = File.expand_path File.dirname(path), @path
       end
-      config_hash = YAML.load_file make_path
-      from_hash(config_hash)
+      if File.exist? path
+        config_hash = YAML.load_file(make_path)
+        from_hash(config_hash)
+      end
+    rescue
+      # load defaults
     end
 
     # Config 객체를 지정된 위치에 YAML 포맷으로 덤프한다.
@@ -40,7 +44,7 @@ module SanUltari
     def save path = nil
       @name = 'config' if @name == nil
       path = make_path if path == nil
-      
+
       File.open(make_path(path), 'w') do |f|
         YAML.dump(to_hash, f)
       end
@@ -57,9 +61,9 @@ module SanUltari
         t_value = value
         if value.instance_of? Hash
           t_value = Config.new key
-          t_value.from_hash value 
+          t_value.from_hash value
         end
-          
+
         @store.send("#{key}=".to_sym, t_value)
       end
     end
