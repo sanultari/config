@@ -21,14 +21,24 @@ module SanUltari
     # Config 객체 초기화
     #
     # @param [String] path 읽어 들일 설정 파일의 위치. 넘기지 않으면 아무것도 설정하지 않는다.
-    def init! path = nil
+    def init! path = nil, default = nil
+      @default = default unless default == nil
+
       return nil if path == nil
       if @name == nil
         @name = File.basename path, '.yml'
         @path = File.expand_path File.dirname(path), @path
       end
-      config_hash = YAML.load_file make_path
-      from_hash(config_hash)
+
+      load_defaults if default_available?
+
+      if File.exist? path
+        abs_path = make_path
+        config_hash = YAML.load_file(abs_path)
+        from_hash(config_hash)
+      end
+    ensure
+      self.save path
     end
 
     # Config 객체를 지정된 위치에 YAML 포맷으로 덤프한다.
@@ -40,7 +50,7 @@ module SanUltari
     def save path = nil
       @name = 'config' if @name == nil
       path = make_path if path == nil
-      
+
       File.open(make_path(path), 'w') do |f|
         YAML.dump(to_hash, f)
       end
@@ -57,9 +67,9 @@ module SanUltari
         t_value = value
         if value.instance_of? Hash
           t_value = Config.new key
-          t_value.from_hash value 
+          t_value.from_hash value
         end
-          
+
         @store.send("#{key}=".to_sym, t_value)
       end
     end
@@ -94,5 +104,19 @@ module SanUltari
     def method_missing(method_name, *args, &block)
       @store.public_send method_name, *args, &block
     end
+
+    def load_defaults
+      return unless default_available?
+      default_hash = @default.to_hash
+      default_hash.keys.each do |key|
+        self.public_send "#{key}=".to_sym, default_hash[key]
+      end
+    end
+
+    def default_available?
+      @default != nil
+    end
+
+    private :load_defaults, :default_available?
   end
 end

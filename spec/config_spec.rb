@@ -1,10 +1,16 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 require 'tempfile'
+require 'fileutils'
 
 describe "SanUltari::Config" do
   before :all do
     @origin = Dir.getwd
     Dir.chdir File.expand_path('../fixture', File.dirname(__FILE__))
+  end
+
+  before :each do
+    @backup = File.expand_path 'fixture.bak', File.dirname(Dir.getwd)
+    FileUtils.cp_r Dir.getwd, @backup
   end
 
   before :each do
@@ -20,7 +26,7 @@ describe "SanUltari::Config" do
 
   it "should create object without yaml file" do
     @fixture.init!
-    @fixture.name.should be_nil
+    @fixture.name.should eql 'config'
     @fixture.path.should eql File.expand_path('.')
   end
 
@@ -59,6 +65,22 @@ describe "SanUltari::Config" do
     end
 
     tmp_file.unlink
+  end
+
+  it "should load default" do
+    config = SanUltari::Config.new
+    config.test = 'a'
+    config.test2 = 'b'
+    config.a.alpha = 'omega'
+    @fixture.init! '/tmp/default.yml', config
+  end
+
+  after :each do
+    temp = Dir.getwd
+    Dir.chdir '..'
+    FileUtils.cp_r Dir["#{@backup}/*"], temp, remove_destination: true
+    FileUtils.rmtree @backup
+    Dir.chdir temp
   end
 
   after :all do
