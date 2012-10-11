@@ -1,4 +1,6 @@
+---
 a: test
 test:
   a: confirm
   b: cancel
+to_ary: {}
