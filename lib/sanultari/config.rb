@@ -24,13 +24,13 @@ module SanUltari
     def init! path = nil, default = nil
       @default = default unless default == nil
 
+      load_defaults if default_available?
+
       return nil if path == nil
       if @name == nil
         @name = File.basename path, '.yml'
         @path = File.expand_path File.dirname(path), @path
       end
-
-      load_defaults if default_available?
 
       if File.exist? path
         abs_path = make_path
