@@ -38,7 +38,7 @@ module SanUltari
         from_hash(config_hash)
       end
     ensure
-      self.save path
+      self.save path unless path == nil
     end
 
     # Config 객체를 지정된 위치에 YAML 포맷으로 덤프한다.
