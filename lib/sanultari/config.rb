@@ -107,6 +107,7 @@ module SanUltari
 
     def load_defaults
       return unless default_available?
+      @default = SanUltari::Config.new.init! @default if @default.instance_of? String
       default_hash = @default.to_hash
       default_hash.keys.each do |key|
         self.public_send "#{key}=".to_sym, default_hash[key]
